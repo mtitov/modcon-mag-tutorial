@@ -1,0 +1,48 @@
+name: mag-access
+version: 1.0.0
+title: Model Access Gateway (MAG) Access Guide
+description: >-
+  A hands-on Jupyter tutorial: obtain Model Access Gateway access, protect a
+  project PAT, discover current models, choose a suitable model, and make a
+  first OpenAI-compatible API call.
+license: MIT
+authors:
+  - name: ModCon BPSW team
+
+runtime:
+  language: python
+  python: "3.11"
+  kernel: python3
+  jupyterlab: true
+  expose_port: 8888
+
+dependencies:
+  pip:
+    - jupyterlab==4.4.7
+    - requests==2.32.5
+    - openai==1.109.1
+
+content:
+  notebooks:
+    - notebooks/mag-access.ipynb
+  docs:
+    - README.md
+    - LICENSE
+
+build:
+  dockerfile: Dockerfile
+  image: mag-access:latest
+  base_image: python:3.11-slim
+  copy_repo: true
+  export_manifest: true
+  cache: true
+
+validation:
+  execute_notebooks: false
+  check_imports: true
+  check_links: true
+  require_clean_execution: true
+
+entrypoint:
+  kind: jupyterlab
+  default_notebook: notebooks/mag-access.ipynb
